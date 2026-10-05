@@ -16,7 +16,7 @@ def respond(messages, instructions, **kwargs):
     """
     api_key = environ.get("OPENRO_API_KEY")
     api_base = environ.get("OPENRO_API_BASE", "https://openrouter.ai/api/v1")
-    default_model = environ.get("OPENRO_DEFAULT_MODEL", "openai/gpt-6-luna")
+    default_model = environ.get("OPENRO_DEFAULT_MODEL", "openrouter/free")
 
     instruction = kwargs.get('system_instruction', instructions)
     first_message = [dict(role='system', content=instruction)] if instruction else []
@@ -65,7 +65,7 @@ def respond(messages, instructions, **kwargs):
             output = json.loads(response_data)
             message = output['choices'][0]['message']
             text = message.get('content', '')
-            thoughts = message.get('reasoning_content', '')
+            thoughts = message.get('reasoning', '')
 
         return thoughts, text
 
